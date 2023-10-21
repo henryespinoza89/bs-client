@@ -40,15 +40,15 @@ public class BsClientApplication implements CommandLineRunner {
 			.flatMap(cat -> productoService.saveCategoria(cat))
 			.doOnNext(c -> log.info("Categoría creada: {}, Id: {}", c.getNombre(), c.getId()))
 			.thenMany(
-				Flux.just(new Producto(String.valueOf(UUID.randomUUID()),"TV Panasonic Pantalla LCD", 456.89, Instant.now(), electronico, ""),
-					new Producto(String.valueOf(UUID.randomUUID()), "Sony Camara HD Digital", 177.89, Instant.now(), electronico, ""),
-					new Producto(String.valueOf(UUID.randomUUID()), "Apple iPod", 46.89, Instant.now(), electronico, ""),
-					new Producto(String.valueOf(UUID.randomUUID()), "Sony Notebook", 846.89, Instant.now(), electronico, ""),
-					new Producto(String.valueOf(UUID.randomUUID()), "Hewlett Packard Multifuncional", 200.89, Instant.now(), electronico, ""),
-					new Producto(String.valueOf(UUID.randomUUID()), "Bianchi Bicicleta", 70.89, Instant.now(), electronico, ""),
-					new Producto(String.valueOf(UUID.randomUUID()), "HP Notebook Omen 17", 2500.89, Instant.now(), electronico, ""),
-					new Producto(String.valueOf(UUID.randomUUID()), "Mica Cómoda 5 Cajones", 150.89, Instant.now(), electronico, ""),
-					new Producto(String.valueOf(UUID.randomUUID()), "TV Sony Bravia OLED 4K Ultra HD", 2255.89, Instant.now(), electronico, "")
+				Flux.just(new Producto(String.valueOf(UUID.randomUUID()),"TV Panasonic Pantalla LCD", 456.89, Instant.now().toString(), electronico, ""),
+					new Producto(String.valueOf(UUID.randomUUID()), "Sony Camara HD Digital", 177.89, Instant.now().toString(), electronico, ""),
+					new Producto(String.valueOf(UUID.randomUUID()), "Apple iPod", 46.89, Instant.now().toString(), electronico, ""),
+					new Producto(String.valueOf(UUID.randomUUID()), "Sony Notebook", 846.89, Instant.now().toString(), electronico, ""),
+					new Producto(String.valueOf(UUID.randomUUID()), "Hewlett Packard Multifuncional", 200.89, Instant.now().toString(), electronico, ""),
+					new Producto(String.valueOf(UUID.randomUUID()), "Bianchi Bicicleta", 70.89, Instant.now().toString(), electronico, ""),
+					new Producto(String.valueOf(UUID.randomUUID()), "HP Notebook Omen 17", 2500.89, Instant.now().toString(), electronico, ""),
+					new Producto(String.valueOf(UUID.randomUUID()), "Mica Cómoda 5 Cajones", 150.89, Instant.now().toString(), electronico, ""),
+					new Producto(String.valueOf(UUID.randomUUID()), "TV Sony Bravia OLED 4K Ultra HD", 2255.89, Instant.now().toString(), electronico, "")
 				).flatMap(producto -> {
 					return productoService.save(producto);
 				})

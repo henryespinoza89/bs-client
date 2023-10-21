@@ -25,7 +25,7 @@ public class ProductAdapter implements ProductPort {
     return Mono.justOrEmpty(Optional.ofNullable(producto.getCreateAt())
         .map(createAt -> producto)
         .orElseGet(() -> {
-          producto.setCreateAt(Instant.now());
+          producto.setCreateAt(String.valueOf(Instant.now()));
           return producto;
       }))
       .flatMap(productService::save)

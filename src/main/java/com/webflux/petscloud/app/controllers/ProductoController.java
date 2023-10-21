@@ -40,7 +40,7 @@ public class ProductoController {
   @PostMapping
   public Mono<ResponseEntity<Producto>> crear(@RequestBody Producto producto) {
     if (producto.getCreateAt() == null) {
-      producto.setCreateAt(Instant.now());
+      producto.setCreateAt(String.valueOf(Instant.now()));
     }
     return productoService.save(producto)
       .map(prod -> ResponseEntity

@@ -7,7 +7,6 @@ import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.time.Instant;
 @Data
 @AllArgsConstructor
 @Document(collection="productos")
@@ -18,7 +17,7 @@ public class Producto {
 	private String nombre;
 	@NotNull
 	private Double precio;
-	private Instant createAt;
+	private String createAt;
 	@Valid
 	private Categoria categoria;
 	private String foto;
