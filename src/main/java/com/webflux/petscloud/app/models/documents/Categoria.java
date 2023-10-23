@@ -1,17 +1,16 @@
 package com.webflux.petscloud.app.models.documents;
 
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBDocument;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
-import jakarta.validation.constraints.NotEmpty;
 @Data
 @AllArgsConstructor
-@Document(collection = "categorias")
+@DynamoDBDocument
 public class Categoria {
-	@Id
-	@NotEmpty
+	@DynamoDBAttribute
 	private String id;
+	@DynamoDBAttribute
 	private String nombre;
 }

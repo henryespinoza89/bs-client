@@ -44,7 +44,7 @@ public class ProductoController {
     }
     return productoService.save(producto)
       .map(prod -> ResponseEntity
-        .created(URI.create("/api/productos/" + prod.getId()))
+        .created(URI.create("/api/productos/" + prod.getProductId()))
         .contentType(MediaType.APPLICATION_JSON)
         .body(prod));
   }
@@ -56,7 +56,7 @@ public class ProductoController {
         p.setPrecio(producto.getPrecio());
         p.setCategoria(producto.getCategoria());
         return productoService.save(p);
-      }).map(p->ResponseEntity.created(URI.create("/api/productos/" + p.getId()))
+      }).map(p->ResponseEntity.created(URI.create("/api/productos/" + p.getProductId()))
           .contentType(MediaType.APPLICATION_JSON)
           .body(p))
       .defaultIfEmpty(ResponseEntity.notFound().build());

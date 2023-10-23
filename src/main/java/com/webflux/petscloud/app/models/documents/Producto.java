@@ -1,24 +1,25 @@
 package com.webflux.petscloud.app.models.documents;
 
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotNull;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
 @AllArgsConstructor
-@Document(collection="productos")
+@DynamoDBTable(tableName = "product")
 public class Producto {
-	@Id
-	private String id;
-	@NotNull
+	@DynamoDBHashKey
+	private String productId;
+	@DynamoDBAttribute
 	private String nombre;
-	@NotNull
+	@DynamoDBAttribute
 	private Double precio;
+	@DynamoDBAttribute
 	private String createAt;
-	@Valid
+	@DynamoDBAttribute
 	private Categoria categoria;
+	@DynamoDBAttribute
 	private String foto;
 }

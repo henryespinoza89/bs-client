@@ -53,6 +53,6 @@ public class BsClientApplication implements CommandLineRunner {
 					return productoService.save(producto);
 				})
 			)
-				.subscribe(producto -> log.info("Insert: {} {}", producto.getId(), producto.getNombre()));
+				.subscribe(producto -> log.info("Insert: {} {}", producto.getProductId(), producto.getNombre()));
 	}
 }

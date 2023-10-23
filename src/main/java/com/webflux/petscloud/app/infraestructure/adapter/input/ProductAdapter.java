@@ -30,7 +30,7 @@ public class ProductAdapter implements ProductPort {
       }))
       .flatMap(productService::save)
       .map(prod -> ResponseEntity
-        .created(URI.create("/api/productos/v2/" + prod.getId()))
+        .created(URI.create("/api/productos/v2/" + prod.getProductId()))
         .contentType(MediaType.APPLICATION_JSON)
         .body(prod));
   }
@@ -59,7 +59,7 @@ public class ProductAdapter implements ProductPort {
       prod.setPrecio(producto.getPrecio());
       prod.setCategoria(producto.getCategoria());
       return productService.save(prod);
-    }).map(p -> ResponseEntity.created(URI.create("/api/productos/v2/" + p.getId()))
+    }).map(p -> ResponseEntity.created(URI.create("/api/productos/v2/" + p.getProductId()))
         .contentType(MediaType.APPLICATION_JSON)
         .body(p))
       .defaultIfEmpty(ResponseEntity.notFound().build());
