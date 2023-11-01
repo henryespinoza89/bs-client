@@ -6,7 +6,6 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.amazonaws.services.dynamodbv2.model.ScanRequest;
 import com.amazonaws.services.dynamodbv2.model.ScanResult;
-import com.webflux.petscloud.app.infraestructure.adapter.config.PetsCloudRepository;
 import com.webflux.petscloud.app.infraestructure.adapter.output.ProductRepository;
 import com.webflux.petscloud.app.infraestructure.adapter.output.entity.Product;
 import lombok.AllArgsConstructor;
@@ -27,8 +26,6 @@ public class ProductRepositoryImpl implements ProductRepository {
 
   @Autowired
   private AmazonDynamoDB amazonDynamoDB;
-
-  private final PetsCloudRepository<Product> petsCloudRepository;
   @Override
   public Mono<Product> createProduct(Product product) {
     dynamoDBMapper.save(product);
