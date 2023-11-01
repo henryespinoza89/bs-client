@@ -1,4 +1,4 @@
-package com.webflux.petscloud.app.models.documents;
+package com.webflux.petscloud.app.infraestructure.adapter.output.entity;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBDocument;
@@ -8,9 +8,10 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 @DynamoDBDocument
-public class Categoria {
+public class Category {
 	@DynamoDBAttribute
 	private String id;
 	@DynamoDBAttribute
-	private String nombre;
+	private String name;
+	public Category() {}
 }

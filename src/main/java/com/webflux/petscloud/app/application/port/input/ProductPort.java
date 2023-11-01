@@ -1,6 +1,7 @@
 package com.webflux.petscloud.app.application.port.input;
 
-import com.webflux.petscloud.app.models.documents.Producto;
+import com.webflux.petscloud.app.application.port.dto.ProductRequestDto;
+import com.webflux.petscloud.app.infraestructure.adapter.output.entity.Product;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,20 +13,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-@RequestMapping("/api/productos/v2")
+@RequestMapping("/api/product/v2")
 public interface ProductPort {
   @PostMapping
-  Mono<ResponseEntity<Producto>> crear(@RequestBody Producto producto);
+  Mono<ResponseEntity<Product>> createProduct(@RequestBody ProductRequestDto product);
 
   @GetMapping
-  Mono<ResponseEntity<Flux<Producto>>> lista();
+  Mono<ResponseEntity<Flux<Product>>> findAll();
 
   @GetMapping("/{id}")
-  Mono<ResponseEntity<Producto>> ver(@PathVariable String id);
+  Mono<ResponseEntity<Product>> findById(@PathVariable String id);
 
   @PutMapping("/{id}")
-  Mono<ResponseEntity<Producto>> editar(@RequestBody Producto producto, @PathVariable String id);
+  Mono<ResponseEntity<Product>> editProduct(@RequestBody Product product, @PathVariable String id);
 
   @DeleteMapping("/{id}")
-  public Mono<ResponseEntity<Void>> eliminar(@PathVariable String id);
+  Mono<ResponseEntity<Void>> deleteProduct(@PathVariable String id);
 }

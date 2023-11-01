@@ -1,4 +1,4 @@
-package com.webflux.petscloud.app.models.documents;
+package com.webflux.petscloud.app.infraestructure.adapter.output.entity;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
@@ -9,17 +9,18 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 @DynamoDBTable(tableName = "product")
-public class Producto {
+public class Product {
 	@DynamoDBHashKey
 	private String productId;
 	@DynamoDBAttribute
-	private String nombre;
+	private String name;
 	@DynamoDBAttribute
-	private Double precio;
+	private Double price;
 	@DynamoDBAttribute
 	private String createAt;
 	@DynamoDBAttribute
-	private Categoria categoria;
+	private Category category;
 	@DynamoDBAttribute
-	private String foto;
+	private String photo;
+	public Product() {}
 }

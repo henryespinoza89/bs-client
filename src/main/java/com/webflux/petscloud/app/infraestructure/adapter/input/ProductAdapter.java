@@ -1,8 +1,11 @@
 package com.webflux.petscloud.app.infraestructure.adapter.input;
 
+import com.webflux.petscloud.app.application.port.dto.ProductRequestDto;
 import com.webflux.petscloud.app.application.port.input.ProductPort;
+import com.webflux.petscloud.app.application.port.mapper.ProductMapper;
 import com.webflux.petscloud.app.domain.service.ProductService;
-import com.webflux.petscloud.app.models.documents.Producto;
+import com.webflux.petscloud.app.infraestructure.adapter.output.entity.Product;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -16,27 +19,31 @@ import java.time.Instant;
 import java.util.Optional;
 
 @RestController
+@AllArgsConstructor
 public class ProductAdapter implements ProductPort {
-
-  @Autowired private ProductService productService;
-
+  @Autowired
+  private final ProductService productService;
+  @Autowired
+  private final ProductMapper productMapper;
   @Override
-  public Mono<ResponseEntity<Producto>> crear(Producto producto) {
-    return Mono.justOrEmpty(Optional.ofNullable(producto.getCreateAt())
-        .map(createAt -> producto)
+  public Mono<ResponseEntity<Product>> createProduct(ProductRequestDto product) {
+    return Mono.justOrEmpty(
+        Optional.ofNullable(product.getCreateAt())
+        .map(createAt -> product)
         .orElseGet(() -> {
-          producto.setCreateAt(String.valueOf(Instant.now()));
-          return producto;
+          product.setCreateAt(String.valueOf(Instant.now()));
+          return product;
       }))
-      .flatMap(productService::save)
+      .map(productMapper::toDomainProduct)
+      .flatMap(productService::createProduct)
       .map(prod -> ResponseEntity
-        .created(URI.create("/api/productos/v2/" + prod.getProductId()))
+        .created(URI.create("/api/product/v2/" + prod.getProductId()))
         .contentType(MediaType.APPLICATION_JSON)
         .body(prod));
   }
 
   @Override
-  public Mono<ResponseEntity<Flux<Producto>>> lista() {
+  public Mono<ResponseEntity<Flux<Product>>> findAll() {
     return Mono.just(
       ResponseEntity.ok()
         .contentType(MediaType.APPLICATION_JSON)
@@ -45,30 +52,30 @@ public class ProductAdapter implements ProductPort {
   }
 
   @Override
-  public Mono<ResponseEntity<Producto>> ver(String id) {
-    return productService.findById(id).map(producto -> ResponseEntity.ok()
+  public Mono<ResponseEntity<Product>> findById(String id) {
+    return productService.findById(id).map(product -> ResponseEntity.ok()
         .contentType(MediaType.APPLICATION_JSON)
-        .body(producto))
+        .body(product))
         .defaultIfEmpty(ResponseEntity.notFound().build());
   }
 
   @Override
-  public Mono<ResponseEntity<Producto>> editar(Producto producto, String id) {
+  public Mono<ResponseEntity<Product>> editProduct(Product product, String id) {
     return productService.findById(id).flatMap(prod -> {
-      prod.setNombre(producto.getNombre());
-      prod.setPrecio(producto.getPrecio());
-      prod.setCategoria(producto.getCategoria());
-      return productService.save(prod);
-    }).map(p -> ResponseEntity.created(URI.create("/api/productos/v2/" + p.getProductId()))
+      prod.setName(product.getName());
+      prod.setPrice(product.getPrice());
+      prod.setCategory(product.getCategory());
+      return productService.createProduct(prod);
+    }).map(p -> ResponseEntity.created(URI.create("/api/product/v2/" + p.getProductId()))
         .contentType(MediaType.APPLICATION_JSON)
         .body(p))
       .defaultIfEmpty(ResponseEntity.notFound().build());
   }
 
   @Override
-  public Mono<ResponseEntity<Void>> eliminar(String id) {
+  public Mono<ResponseEntity<Void>> deleteProduct(String id) {
     return productService.findById(id).flatMap(prod -> {
-      return productService.delete(prod).then(Mono.just(new ResponseEntity<Void>(HttpStatus.NO_CONTENT)));
+      return productService.deleteProduct(prod).then(Mono.just(new ResponseEntity<Void>(HttpStatus.NO_CONTENT)));
     }).defaultIfEmpty(new ResponseEntity<Void>(HttpStatus.NOT_FOUND));
   }
 }
