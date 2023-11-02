@@ -6,8 +6,8 @@ import org.springframework.context.annotation.Configuration;
 
 @SpringBootApplication
 @Configuration
-public class BsClientApplication {
+public class BsProductApplication {
 	public static void main(String[] args) {
-		SpringApplication.run(BsClientApplication.class, args);
+		SpringApplication.run(BsProductApplication.class, args);
 	}
 }

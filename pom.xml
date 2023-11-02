@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.webflux.petscloud</groupId>
-	<artifactId>bs-client</artifactId>
+	<artifactId>bs-product</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>bs-client</name>
-	<description>Manage client information</description>
+	<name>bs-product</name>
+	<description>Manage product information</description>
 	<properties>
 		<java.version>17</java.version>
 	</properties>
